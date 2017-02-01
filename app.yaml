@@ -1,0 +1,45 @@
+application: temp
+version: 1
+runtime: go
+api_version: go1
+
+handlers:
+- url: /(.*\.html)
+  mime_type: text/html
+  static_files: webclient/app/\1
+  upload: webclient/app/(.*\.html)
+
+- url: /(.*\.css)
+  static_files: webclient/app/\1
+  upload: webclient/app/(.*\.css)
+
+- url: /(.*\.(gif|png|jpg|css|js|map|json|ttf|woff|woff2))$
+  static_files: webclient/app/\1
+  upload: webclient/app/(.*)
+
+- url: /components
+  static_dir: webclient/app/components
+
+- url: /node_modules
+  static_dir: webclient/node_modules
+
+- url: /(.*)
+  static_files: webclient/app/index.html
+  upload: webclient/app/index.html
+
+# Temporary setting to keep gcloud from uploading not required files for deployment
+skip_files:
+- ^node_modules$
+- ^bower_components$
+- ^app\.yaml
+- ^README\..*
+- \.gitignore
+- ^\.git$
+- ^grunt\.js
+- ^src$
+- ^e2e$
+- \.editorconfig
+- ^karma\.config\.js
+- ^package\.json
+- ^protractor\.conf\.js
+- ^tslint\.json
